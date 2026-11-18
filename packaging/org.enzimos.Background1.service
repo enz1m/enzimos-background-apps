@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: MIT
+[D-BUS Service]
+Name=org.enzimos.Background1
+Exec=/usr/bin/false
+SystemdService=enzimos-background-apps.service

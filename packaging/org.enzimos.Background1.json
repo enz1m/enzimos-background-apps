@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "executable": "/usr/lib/enzimos-background/enzimos-background-service",
+  "bus_name": "org.enzimos.Background1",
+  "unit": "enzimos-background-apps.service",
+  "witness": {
+    "bus": "org.enzimos.System1",
+    "path": "/org/enzimos/System1",
+    "interface": "org.enzimos.System1",
+    "method": "InspectBackgroundBroker",
+    "schema": 1
+  }
+}

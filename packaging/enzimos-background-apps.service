@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: MIT
+[Unit]
+Description=enzimOS background application controls
+After=dbus.socket
+[Service]
+Type=dbus
+BusName=org.enzimos.Background1
+ExecStart=/usr/lib/enzimos-background/enzimos-background-service
+UnsetEnvironment=LD_PRELOAD LD_LIBRARY_PATH LD_AUDIT GCONV_PATH
+UMask=0077
+NoNewPrivileges=yes
+LimitCORE=0
+MemoryMax=96M
+TasksMax=32
+TimeoutStartSec=15
+TimeoutStopSec=10
+Restart=no

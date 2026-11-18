@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: MIT
+[Unit]
+Description=Record enzimOS native user-service runtime identity
+Before=systemd-user-sessions.service
+After=local-fs.target
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/enzimos-background/enzimos-background-trust
+User=root
+Group=root
+UMask=0077
+RuntimeDirectory=enzimos-background-trust
+RuntimeDirectoryMode=0755
+RuntimeDirectoryPreserve=yes
+RemainAfterExit=yes
+NoNewPrivileges=yes
+LimitCORE=0
+MemoryMax=32M
+TasksMax=8
+TimeoutStartSec=10
+[Install]
+WantedBy=multi-user.target
