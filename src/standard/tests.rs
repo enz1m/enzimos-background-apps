@@ -123,6 +123,16 @@ fn portal_rows_are_cross_checked_against_the_live_instance() {
         Value::Null
     );
     // The sandbox released its lock: a stale record, whatever else remains.
+    // Unlock explicitly: a child forked by a parallel test can hold this open file
+    // description, and with it the OFD lock, until it execs.
+    // SAFETY: `flock` is plain data; all-zero is a valid value.
+    let mut l: libc::flock = unsafe { std::mem::zeroed() };
+    (l.l_type, l.l_whence) = (libc::F_UNLCK as _, libc::SEEK_SET as _);
+    assert_eq!(
+        // SAFETY: `lock` is an open descriptor and `l` outlives the call.
+        unsafe { libc::fcntl(lock.as_raw_fd(), libc::F_OFD_SETLK, &l) },
+        0
+    );
     drop(lock);
     assert_eq!(
         state("org.example.Music", "3383539412"),
